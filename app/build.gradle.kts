@@ -39,3 +39,7 @@ tasks.jar {
     // Дубликаты файлов могут возникнуть при распаковке зависимостей
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+tasks.getByName("run", JavaExec::class) {
+    standardInput = System.`in`
+}
