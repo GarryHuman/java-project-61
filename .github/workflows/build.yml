@@ -40,7 +40,7 @@ jobs:
         # Запускаем сборку и передаем корректные ключи SonarCloud напрямую в команду
         run: |
           ./gradlew build sonar \
-            -Dsonar.organization="garryhuman" \
-            -Dsonar.projectKey="GarryHuman_java-project-61" \
-            -Dsonar.host.url="https://sonarcloud.io" \
-            --no-daemon --info
+          -Dsonar.organization="garryhuman" \
+          -Dsonar.projectKey="GarryHuman_java-project-61" \
+          -Dsonar.host.url="https://sonarcloud.io" \
+          --no-daemon --info
