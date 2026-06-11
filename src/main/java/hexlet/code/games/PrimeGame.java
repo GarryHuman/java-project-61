@@ -5,7 +5,7 @@ import hexlet.code.Cli;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class primeGame {
+public class PrimeGame {
     public static void primeMain() {
         var index = 0;
         var userName = Cli.helloUser();
@@ -39,14 +39,13 @@ public class primeGame {
         System.out.println("Question: " +  puzzleNumber);
         String userChoice = scanner.nextLine();
 
-        if (userChoice.equals("yes") && (primeStatus == true)) {
+        if (userChoice.equals("yes") && (primeStatus)) {
             System.out.println("Correct!");
-        }
-        else if (userChoice.equals("no") && (primeStatus == false)) {
+        } else if (userChoice.equals("no") && (!primeStatus)) {
             System.out.println("Correct!");
-        }
-        else {
+        } else {
             System.out.println("Wrong answer.");
+            System.out.println("Let's try again, " + userName);
             System.exit(0);
         }
     }

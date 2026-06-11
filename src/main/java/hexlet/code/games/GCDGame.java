@@ -5,14 +5,14 @@ import hexlet.code.Cli;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class gcdGame {
+public class GCDGame {
     public static void gcdGameMain() {
         var index = 0;
         var userName = Cli.helloUser();
 
         System.out.println("Find the greatest common divisor of given numbers.");
 
-        while ( index < 3) {
+        while (index < 3) {
             askQuestion(userName);
             index++;
         }
@@ -42,9 +42,8 @@ public class gcdGame {
 
         if  (Integer.parseInt(userChoice) == answer) {
             System.out.println("Correct!");
-        }
-        else {
-            System.out.println("\'" + userChoice + "\' " +"is wrong answer ;(. Correct answer was " + "\'" + answer + "\'.");
+        } else {
+            System.out.printf("'%s' is wrong answer ;(. Correct answer was '%d'.%n", userChoice, answer);
             System.out.println("Let\'s try again, " + userName);
             System.exit(0);
         }

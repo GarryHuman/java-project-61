@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class progressionGame {
+public class ProgressionGame {
     public static void progressionMain() {
         var index = 0;
         var userName = Cli.helloUser();
@@ -57,7 +57,7 @@ public class progressionGame {
         if (Integer.parseInt(userChoice) == hiddenInteger) {
             System.out.println("Correct!");
         } else {
-            System.out.println("\'" + userChoice + "\' " + "is wrong answer ;(. Correct answer was " + "\'" + hiddenInteger + "\'.");
+            System.out.printf("'%s' is wrong answer ;(. Correct answer was '%d'.%n", userChoice, hiddenInteger);
             System.out.println("Let\'s try again, " + userName);
             System.exit(0);
         }

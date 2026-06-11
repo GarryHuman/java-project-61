@@ -1,6 +1,10 @@
 package hexlet.code;
 
-import hexlet.code.games.*;
+import hexlet.code.games.EvenGame;
+import hexlet.code.games.GCDGame;
+import hexlet.code.games.MathGame;
+import hexlet.code.games.PrimeGame;
+import hexlet.code.games.ProgressionGame;
 
 import java.util.Scanner;
 
@@ -29,28 +33,23 @@ public class App {
                 System.exit(0);
                 break;
             case "2":
-                evenGame.evenGameMain();
+                EvenGame.evenGameMain();
                 break;
-            case "3": {
-                mathGame.mathGameMain();
+            case "3":
+                MathGame.mathGameMain();
                 break;
-            }
-            case "4": {
-                gcdGame.gcdGameMain();
+            case "4":
+                GCDGame.gcdGameMain();
                 break;
-            }
-            case "5": {
-                progressionGame.progressionMain();
+            case "5":
+                ProgressionGame.progressionMain();
                 break;
-            }
-            case "6": {
-                primeGame.primeMain();
+            case "6":
+                PrimeGame.primeMain();
                 break;
-            }
             default:
                 System.out.println("Invalid input.");
                 break;
         }
-
     }
 }
