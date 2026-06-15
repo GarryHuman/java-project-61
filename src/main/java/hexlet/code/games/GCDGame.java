@@ -44,7 +44,7 @@ public class GCDGame {
             System.out.println("Correct!");
         } else {
             System.out.printf("'%s' is wrong answer ;(. Correct answer was '%d'.%n", userChoice, answer);
-            System.out.println("Let\'s try again, " + userName);
+            System.out.println("Let's try again, " + userName);
             System.exit(0);
         }
     }

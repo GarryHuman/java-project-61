@@ -21,11 +21,11 @@ public class ProgressionGame {
     }
 
     public static String[] getRandomArrayProgressive() {
-        int minLength = 5;
-        int maxLength = 15;
-        int minStep = 2;
-        int maxStep = 10;
-        int startValue = 0;
+        final int minLength = 5;
+        final int maxLength = 15;
+        final int minStep = 2;
+        final int maxStep = 10;
+        final int startValue = 0;
 
         int randomLength = ThreadLocalRandom.current().nextInt(minLength, maxLength + 1);
         int randomStep = ThreadLocalRandom.current().nextInt(minStep, maxStep + 1);
@@ -44,7 +44,7 @@ public class ProgressionGame {
         Scanner scanner = new Scanner(System.in);
         String[] progressiveArray = getRandomArrayProgressive();
         String[] hiddenArray = new String[progressiveArray.length];
-        int hiddenIntegerIndex = ThreadLocalRandom.current().nextInt(progressiveArray.length + 1);
+        int hiddenIntegerIndex = ThreadLocalRandom.current().nextInt(progressiveArray.length);
         int hiddenInteger = Integer.parseInt(progressiveArray[hiddenIntegerIndex]);
         hiddenArray = progressiveArray.clone();
         hiddenArray[hiddenIntegerIndex] = "..";
@@ -58,7 +58,7 @@ public class ProgressionGame {
             System.out.println("Correct!");
         } else {
             System.out.printf("'%s' is wrong answer ;(. Correct answer was '%d'.%n", userChoice, hiddenInteger);
-            System.out.println("Let\'s try again, " + userName);
+            System.out.println("Let's try again, " + userName);
             System.exit(0);
         }
     }
