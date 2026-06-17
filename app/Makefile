@@ -1,8 +1,10 @@
 # Цель для запуска приложения
-run:
-	./gradlew clean
-	./gradlew build
-	java -jar ./app/build/libs/app-1.0-SNAPSHOT.jar
+.PHONY: run build clean
 
-# Объявление цели фейковой (чтобы make не искал файл с именем 'run')
-.PHONY: run
+# Очистка и сборка проекта
+build:
+	./app/gradlew clean build
+
+# Запуск приложения через Gradle
+run:
+	./app/gradlew run
