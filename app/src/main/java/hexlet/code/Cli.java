@@ -10,6 +10,7 @@ public class Cli {
         System.out.println("May i have your name?");
         String name = scanner.nextLine();
         System.out.println("Hello, " + name);
+        scanner.close();
         return name;
     }
 }
