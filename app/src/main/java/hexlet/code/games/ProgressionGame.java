@@ -1,65 +1,40 @@
 package hexlet.code.games;
 
-import hexlet.code.Cli;
-
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
+import hexlet.code.Engine;
+import java.util.Random;
 
 public class ProgressionGame {
-    public static void progressionMain() {
-        var index = 0;
-        var userName = Cli.helloUser();
+    private static final String DESCRIPTION = "What number is missing in the progression?";
+    private static final int MIN_LENGTH = 5;  // Минимальная длина прогрессии
+    private static final int MAX_LENGTH = 10; // Максимальная длина прогрессии
+    private static final int MAX_START = 20;  // Максимальное начальное значение
+    private static final int MAX_STEP = 10;   // Максимальный шаг прогрессии
 
-        System.out.println("What number is missing in the progression?");
+    public static void start() {
+        String[][] roundsData = new String[Engine.ROUNDS_COUNT][2];
+        Random random = new Random();
 
-        while (index < 3) {
-            askQuestion(userName);
-            index++;
+        for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
+            // Генерируем параметры текущей прогрессии
+            int length = random.nextInt(MAX_LENGTH - MIN_LENGTH + 1) + MIN_LENGTH;
+            int start = random.nextInt(MAX_START) + 1;
+            int step = random.nextInt(MAX_STEP) + 1;
+            // Выбираем случайный индекс, который будет скрыт
+            int hiddenIndex = random.nextInt(length);
+            // Создаем массив для хранения элементов прогрессии в виде строк
+            String[] progression = new String[length];
+            for (int j = 0; j < length; j++) {
+                progression[j] = String.valueOf(start + j * step);
+            }
+            // Запоминаем правильный ответ (скрытое число)
+            String correctAnswer = progression[hiddenIndex];
+            // Заменяем элемент по выбранному индексу на точки
+            progression[hiddenIndex] = "..";
+            // Объединяем массив строк в одну строку через пробел
+            roundsData[i][0] = String.join(" ", progression);
+            roundsData[i][1] = correctAnswer;
         }
-        System.out.println("Congratulations, " + userName + "!");
-    }
 
-    public static String[] getRandomArrayProgressive() {
-        final int minLength = 5;
-        final int maxLength = 15;
-        final int minStep = 2;
-        final int maxStep = 10;
-        final int startValue = 0;
-
-        int randomLength = ThreadLocalRandom.current().nextInt(minLength, maxLength + 1);
-        int randomStep = ThreadLocalRandom.current().nextInt(minStep, maxStep + 1);
-
-        String[] progressiveArray = new String[randomLength];
-
-        int currentValue = startValue;
-        for (int i = 0; i < randomLength; i++) {
-            progressiveArray[i] = Integer.toString(currentValue);
-            currentValue += randomStep;
-        }
-        return progressiveArray;
-    }
-
-    public static void askQuestion(String userName) {
-        Scanner scanner = new Scanner(System.in);
-        String[] progressiveArray = getRandomArrayProgressive();
-        String[] hiddenArray = new String[progressiveArray.length];
-        int hiddenIntegerIndex = ThreadLocalRandom.current().nextInt(progressiveArray.length);
-        int hiddenInteger = Integer.parseInt(progressiveArray[hiddenIntegerIndex]);
-        hiddenArray = progressiveArray.clone();
-        hiddenArray[hiddenIntegerIndex] = "..";
-
-        System.out.println("Question: " + Arrays.toString(hiddenArray));
-
-        System.out.println("Your answer: ");
-        String userChoice = scanner.nextLine();
-
-        if (Integer.parseInt(userChoice) == hiddenInteger) {
-            System.out.println("Correct!");
-        } else {
-            System.out.printf("'%s' is wrong answer ;(. Correct answer was '%d'.%n", userChoice, hiddenInteger);
-            System.out.println("Let's try again, " + userName);
-            System.exit(0);
-        }
+        Engine.run(DESCRIPTION, roundsData);
     }
 }

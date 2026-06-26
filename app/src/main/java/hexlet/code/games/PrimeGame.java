@@ -1,52 +1,38 @@
 package hexlet.code.games;
 
-import hexlet.code.Cli;
-
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
+import hexlet.code.Engine;
+import java.util.Random;
 
 public class PrimeGame {
-    public static void primeMain() {
-        var index = 0;
-        var userName = Cli.helloUser();
+    private static final String DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
+    private static final int MAX_VALUE = 100;
 
-        System.out.println("Answer 'yes' if given number is prime. Otherwise answer 'no'.");
+    public static void start() {
+        String[][] roundsData = new String[Engine.ROUNDS_COUNT][2];
+        Random random = new Random();
 
-        while (index < 3) {
-            askQuestion(userName);
-            index++;
+        for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
+            int num = random.nextInt(MAX_VALUE) + 1;
+
+            // Вопрос: случайное число
+            roundsData[i][0] = String.valueOf(num);
+            // Ответ: yes, если метод isPrime возвращает true, иначе no
+            roundsData[i][1] = isPrime(num) ? "yes" : "no";
         }
-        System.out.println("Congratulations, " + userName + "!");
+
+        Engine.run(DESCRIPTION, roundsData);
     }
-    public static boolean isPrime(int number) {
-        if (number <= 1) {
+    // Проверяет, является ли переданное число простым
+    private static boolean isPrime(int num) {
+        if (num < 2) {
             return false;
         }
-        for (int i = 2; i * i <= number; i++) {
-            if (number % i == 0) {
+        // Оптимизация: проверяем делители только до квадратного корня из числа
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
                 return false;
             }
         }
         return true;
-    }
-
-    public static void askQuestion(String userName) {
-        Scanner scanner = new Scanner(System.in);
-
-        int puzzleNumber = ThreadLocalRandom.current().nextInt(100);
-        boolean primeStatus = isPrime(puzzleNumber);
-
-        System.out.println("Question: " +  puzzleNumber);
-        String userChoice = scanner.nextLine();
-
-        if (userChoice.equals("yes") && (primeStatus)) {
-            System.out.println("Correct!");
-        } else if (userChoice.equals("no") && (!primeStatus)) {
-            System.out.println("Correct!");
-        } else {
-            System.out.println("Wrong answer.");
-            System.out.println("Let's try again, " + userName);
-            System.exit(0);
-        }
     }
 }

@@ -1,39 +1,28 @@
 package hexlet.code.games;
 
-import hexlet.code.Cli;
-
-import java.util.Scanner;
-import java.util.function.Predicate;
-import java.util.concurrent.ThreadLocalRandom;
+import hexlet.code.Engine;
+import java.util.Random;
 
 public class EvenGame {
-    public static void evenGameMain() {
-        var index = 0;
-        var userName = Cli.helloUser();
+    private static final String DESCRIPTION = "Answer 'yes' if the number is even, otherwise answer 'no'.";
+    private static final int MAX_RANDOM_NUMBER = 100;
 
-        System.out.println("Answer 'yes' if the number is even, otherwise answer 'no'.");
+    public static void start() {
+        // Создаем структуру данных для раундов: [номер_раунда][0 - вопрос, 1 - ответ]
+        String[][] roundsData = new String[Engine.ROUNDS_COUNT][2];
+        Random random = new Random();
 
-        while (index < 3) {
-            askQuestion();
-            index++;
+        for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
+            int number = random.nextInt(MAX_RANDOM_NUMBER);
+
+            String question = String.valueOf(number);
+            String correctAnswer = (number % 2 == 0) ? "yes" : "no";
+
+            roundsData[i][0] = question; // Вопрос раунда
+            roundsData[i][1] = correctAnswer; // Правильный ответ
         }
-        System.out.println("Congratulations, " + userName + "!");
 
-    }
-    public static void askQuestion() {
-        Scanner scanner = new Scanner(System.in);
-        Predicate<Integer> isEven = n -> n % 2 == 0;
-        int randomBounded = ThreadLocalRandom.current().nextInt(100);
-        System.out.println("Question: " +  randomBounded);
-        System.out.println("Your answer: ");
-        String userChoice = scanner.nextLine();
-        if (userChoice.equals("yes") && (isEven.test(randomBounded))) {
-            System.out.println("Correct!");
-        } else if (userChoice.equals("no") && (!isEven.test(randomBounded))) {
-            System.out.println("Correct!");
-        } else {
-            System.out.println("Wrong answer.");
-            System.exit(0);
-        }
+        // Запускаем универсальный движок
+        Engine.run(DESCRIPTION, roundsData);
     }
 }

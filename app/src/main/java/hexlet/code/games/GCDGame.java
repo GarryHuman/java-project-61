@@ -1,23 +1,28 @@
 package hexlet.code.games;
 
-import hexlet.code.Cli;
-
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
+import hexlet.code.Engine;
+import java.util.Random;
 
 public class GCDGame {
-    public static void gcdGameMain() {
-        var index = 0;
-        var userName = Cli.helloUser();
+    private static final String DESCRIPTION = "Find the greatest common divisor of given numbers.";
+    private static final int MAX_VALUE = 100;
 
-        System.out.println("Find the greatest common divisor of given numbers.");
+    public static void start() {
+        String[][] roundsData = new String[Engine.ROUNDS_COUNT][2];
+        Random random = new Random();
 
-        while (index < 3) {
-            askQuestion(userName);
-            index++;
+        for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
+            int num1 = random.nextInt(MAX_VALUE) + 1;
+            int num2 = random.nextInt(MAX_VALUE) + 1;
+            // Вопрос: два числа через пробел
+            roundsData[i][0] = num1 + " " + num2;
+            // Ответ: вычисленный НОД
+            roundsData[i][1] = String.valueOf(findGCD(num1, num2));
         }
-        System.out.println("Congratulations, " + userName + "!");
+
+        Engine.run(DESCRIPTION, roundsData);
     }
+    // Вычисляет наибольший общий делитель двух чисел
     public static int findGCD(int firstInteger, int secondInteger) {
         // Пока второе число не станет равным нулю
         while (secondInteger != 0) {
@@ -26,26 +31,5 @@ public class GCDGame {
             firstInteger = temp;  // Присваиваем 'a' значение 'b'
         }
         return Math.abs(firstInteger); // Возвращаем модуль, чтобы НОД всегда был положительным
-    }
-    public static void askQuestion(String userName) {
-        Scanner scanner = new Scanner(System.in);
-
-        int firstInteger = ThreadLocalRandom.current().nextInt(100);
-        int secondInteger = ThreadLocalRandom.current().nextInt(100);
-        int answer = 0;
-
-        System.out.println("Question: " + Integer.toString(firstInteger) + " " + Integer.toString(secondInteger));
-        answer = findGCD(firstInteger, secondInteger);
-
-        System.out.println("Your answer: ");
-        String userChoice = scanner.nextLine();
-
-        if  (Integer.parseInt(userChoice) == answer) {
-            System.out.println("Correct!");
-        } else {
-            System.out.printf("'%s' is wrong answer ;(. Correct answer was '%d'.%n", userChoice, answer);
-            System.out.println("Let's try again, " + userName);
-            System.exit(0);
-        }
     }
 }

@@ -22,26 +22,37 @@ public class App {
                 5 - Progression\s
                 6 - Prime\s
                 0 - Exit""");
+
         String userChoice = scanner.nextLine();
         System.out.println("Your choice: " + userChoice);
 
+        // Обработка вывода пользователя
         switch (userChoice) {
             case "1":
                 GreetGame.run();
+                break;
             case "0":
                 System.out.println("See you later!");
+                break;
             case "2":
-                EvenGame.evenGameMain();
+                EvenGame.start();
+                break;
             case "3":
-                MathGame.mathGameMain();
+                MathGame.start();
+                break;
             case "4":
-                GCDGame.gcdGameMain();
+                GCDGame.start();
+                break;
             case "5":
-                ProgressionGame.progressionMain();
+                ProgressionGame.start();
+                break;
             case "6":
-                PrimeGame.primeMain();
+                PrimeGame.start();
+                break;
             default:
+                // Завершение работы при выборе 0 или вводе некорректного значения
                 System.out.println("Invalid input.");
+                break;
         }
         scanner.close();
     }

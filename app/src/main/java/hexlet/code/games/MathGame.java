@@ -1,57 +1,39 @@
 package hexlet.code.games;
 
-import hexlet.code.Cli;
-
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
+import hexlet.code.Engine;
+import java.util.Random;
 
 public class MathGame {
-    public static void mathGameMain() {
-        var index = 0;
-        var userName = Cli.helloUser();
+    private static final String DESCRIPTION = "What is the result of the expression?";
+    private static final int MAX_VALUE = 20; // Максимальное значение для случайных чисел
+    private static final String[] OPERATORS = {"+", "-", "*"};
 
-        System.out.println("What is the result of the expression?");
+    public static void start() {
+        String[][] roundsData = new String[Engine.ROUNDS_COUNT][2];
+        Random random = new Random();
 
-        while (index < 3) {
-            askQuestion(userName);
-            index++;
+        for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
+            // Генерируем два случайных числа от 1 до MAX_VALUE
+            int num1 = random.nextInt(MAX_VALUE) + 1;
+            int num2 = random.nextInt(MAX_VALUE) + 1;
+            // Выбираем случайный математический оператор из массива
+            String operator = OPERATORS[random.nextInt(OPERATORS.length)];
+            // Формируем строку с вопросом
+            roundsData[i][0] = num1 + " " + operator + " " + num2;
+            // Вычисляем правильный ответ и записываем его в виде строки
+            roundsData[i][1] = String.valueOf(calculate(num1, num2, operator));
         }
-        System.out.println("Congratulations, " + userName + "!");
+
+        Engine.run(DESCRIPTION, roundsData);
     }
-    public static void askQuestion(String userName) {
-        Scanner scanner = new Scanner(System.in);
-        String firstInteger = Integer.toString(ThreadLocalRandom.current().nextInt(100));
-        String secondInteger = Integer.toString(ThreadLocalRandom.current().nextInt(100));
-        int answer = 0;
-        String[] mathOperantChoices = {"*", "+", "-"};
-        int mathOperantIndex = ThreadLocalRandom.current().nextInt(3);
-        String mathOperant = mathOperantChoices[mathOperantIndex];
-
-        switch (mathOperant) {
-            case "*":
-                answer = Integer.parseInt(firstInteger) * Integer.parseInt(secondInteger);
-                System.out.println("Question: " + firstInteger + " * " + secondInteger);
-                break;
-            case "+":
-                answer = Integer.parseInt(firstInteger) * Integer.parseInt(secondInteger);
-                System.out.println("Question: " + firstInteger + " + " + secondInteger);
-                break;
-            case  "-":
-                answer = Integer.parseInt(firstInteger) * Integer.parseInt(secondInteger);
-                System.out.println("Question: " + firstInteger + " - " + secondInteger);
-                break;
-            default:
-                break;
-        }
-        System.out.println("Your answer: ");
-        String userChoice = scanner.nextLine();
-
-        if  (Integer.parseInt(userChoice) == answer) {
-            System.out.println("Correct!");
-        } else {
-            System.out.printf("'%s' is wrong answer ;(. Correct answer was '%d'.%n", userChoice, answer);
-            System.out.println("Let's try again, " + userName);
-            System.exit(0);
-        }
+    // Выполняет математическую операцию над двумя числами.
+    private static int calculate(int num1, int num2, String operator) {
+        return switch (operator) {
+            case "+" -> num1 + num2;
+            case "-" -> num1 - num2;
+            case "*" -> num1 * num2;
+            // Исключение на случай, если в массив OPERATORS добавят неизвестный знак
+            default -> throw new IllegalArgumentException("Unknown operator: " + operator);
+        };
     }
 }
