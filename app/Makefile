@@ -1,10 +1,8 @@
-# Цель для запуска приложения
-.PHONY: run build clean
-
-# Очистка и сборка проекта
+.PHONY: build
 build:
-	./app/gradlew clean build
+	./gradlew clean
+	./gradlew build
 
-# Запуск приложения через Gradle
-run:
-	./app/gradlew run
+.PHONY: run-dist
+run-dist:
+	./build/install/app/bin/app

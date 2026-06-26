@@ -29,7 +29,7 @@ public class Engine {
 
             // Если ответ неверен, сообщаем об ошибке и немедленно завершаем игру
             if (!userAnswer.equalsIgnoreCase(correctAnswer)) {
-                System.out.println("'" + userAnswer + "' is wrong answer ;(. Correct answer was '" + correctAnswer + "'.");
+                System.out.printf("'%s' is wrong answer ;(. Correct answer was '%s'.%n", userAnswer, correctAnswer);
                 System.out.println("Let's try again, " + userName + "!");
                 return;
             }
