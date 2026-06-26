@@ -36,7 +36,7 @@ jobs:
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Генерируется автоматически, не трогаем
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # Вы добавили в Settings -> Secrets репозитория
+          SONAR_TOKEN: ${{ 701ce0c22513cfbe806b7e852cb9077672def47b }}    # Вы добавили в Settings -> Secrets репозитория
         # Запускаем сборку и передаем корректные ключи SonarCloud напрямую в команду
         run: |
           ./gradlew build sonar \
